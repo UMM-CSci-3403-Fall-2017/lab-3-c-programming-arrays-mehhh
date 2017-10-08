@@ -1,27 +1,31 @@
 #include <stdlib.h>
 #include <stdbool.h>
-
-
-
+#include "array_merge.h"
+#include "mergesort.h"
+#include <stdio.h>
 //This function takes in the array called sizes and make one big array to hold
 //the number of elements at the first index and the capacity for the element of the subarrays
 
 
-int* array_copy(int num_arrays, int* sizes, int** values) {
+int* array_merge(int num_arrays, int* sizes, int** values) {
   int i=0;
   int j=0;
   int arr_size=0;
   int count=0;
   int index=1;
+  int z =0;
+  //the outter loop goes over the array containing the sizes of the arrays and sets the inner loop constraint as the size of the 1st arrray
+  //until the last array. A count is being added to get the number of elements.
   for(i=0; i<num_arrays; i++) {
     arr_size = sizes[i];
     for(j=0; j<arr_size; j++) {
       count++;
     }
   }
+  //adding 1 extra spot to contain the number of elements in the array.
+  int* arrCopy = (int*) calloc(count, sizeof(int));
+  //The first index contains the total number of elements
 
-  int* arrCopy = (int*) calloc(count+1, sizeof(int));
-  arrCopy[0]=count;
 
   for(i=0; i<num_arrays; i++) {
     arr_size= sizes[i];
@@ -29,53 +33,18 @@ int* array_copy(int num_arrays, int* sizes, int** values) {
       arrCopy[index] = *(*(values+i)+j);
       index++;
     }
-    
   }
-  return arrCopy;
+
+  mergesort(count, arrCopy);
+ int* arrCopy2 = (int*) calloc(count+1, sizeof(int));
+ arrCopy2[0] = count;
+ for(i=1; i <= count; i++) {
+   arrCopy2[i] = arrCopy[z];
+   z++;
+ }
+ free(arrCopy);
+ free(values);
+  return arrCopy2;
  }
 
-void mergesortRange(int* values, int startIndex, int endIndex) {
-  int rangeSize = endIndex-startIndex;
-  int midPoint=0;
-  if(rangeSize >=2) {
-    midPoint = (startIndex+endIndex) /2;
-    mergesortRange(values, startIndex, midPoint);
-    mergesortRange(values, midPoint, endIndex);
-    mergeRanges(values, startIndex, midPoint, endIndex);
-  }
-}
-
-void mergesortRanges(int* values, int startIndex, int midPoint, int endIndex) {
-  int rangeSize = endIndex -startIndex;
-  int* destination = (int*) calloc(rangeSize, sizeof(int));
-  int firstIndex = startIndex;
-  int secondIndex = midPoint;
-  int copyIndex=0;
-  int i = 0;
-  while(firstIndex < midPoint && secondIndex < endIndex) {
-    if(values[firstIndex] < values[secondIndex]) {
-      destination[copyIndex] = values[firstIndex];
-      ++firstIndex;
-    } else {
-      destination[copyIndex] = values[secondIndex];
-      ++secondIndex;
-    }
-    ++copyIndex;
-  }
-  while (firstIndex < midPoint) {
-    destination[copyIndex] = values[firstIndex];
-    ++copyIndex;
-    ++firstIndex;
-  }
-
-  while (secondIndex < endIndex) {
-    destination[copyIndex] = values[secondIndex];
-    ++copyIndex;
-    ++secondIndex;
-  }
-  for ( i = 0; i < rangeSize; ++i) {
-    values[i + startIndex] = destination[i];
-  }
-  free(destination);
-}
 
