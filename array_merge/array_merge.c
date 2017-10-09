@@ -22,8 +22,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
  
 
   
-  //adding 1 extra spot to contain the number of elements in the array.
-  int* arrCopy = (int*) calloc(count, sizeof(int));
+int* arrCopy = (int*)calloc(count, sizeof(int));
 
 
   for(i=0; i<num_arrays; i++) {
@@ -61,7 +60,6 @@ for(i=0; i < count; i++)
      for(i=1; i<=count; i++) {
        arrCopy2[i]= arrCopy[i-1];
      }
-
        arrCopy2[0] = count;
         free(arrCopy);
 
