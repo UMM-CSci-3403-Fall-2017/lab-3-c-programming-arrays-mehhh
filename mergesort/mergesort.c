@@ -36,6 +36,7 @@
     for(i=0; i < rangeSize; ++i) {
       values[i + startIndex] = destination[i];
     }
+	  free(destination);
   }
     void mergesortRange(int* values, int startIndex, int endIndex) {
     int rangeSize = endIndex- startIndex;
