@@ -24,9 +24,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   
   //adding 1 extra spot to contain the number of elements in the array.
   int* arrCopy = (int*) calloc(count, sizeof(int));
-  //The first index contains the total number of elements
-       printf("%s\n", "this should be the size of the array");
-       printf("%d\n", count);
+
 
   for(i=0; i<num_arrays; i++) {
     arr_size= sizes[i];
@@ -38,35 +36,39 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
 
 
 mergesort(count, arrCopy);
-for(i=0; i<count; i++)
-    {
-        for(j=i+1; j<count; j++)
-        {
-            /* If any duplicate found */
-            if(arrCopy[i] == arrCopy[j])
+
+
+
+for(i=0; i < count; i++) 
+   {
+      for(j=i+1; j < count; )
+      {
+         if(arrCopy[j] == arrCopy[i])
+         {
+            for(k=j; k < count;k++) 
             {
-                /* Delete the current duplicate element */
-                for(k=j; k<count; k++)
-                {
-                    arrCopy[k] = arrCopy[k + 1];
-                }
-
-                /* Decrement size after removing duplicate element */
-                count--;
-
-                /* If shifting of elements occur then don't increment j */
-                j--;
+               arrCopy[k] = arrCopy[k+1];
             }
-        }
-    }
+            count--;
+         }
+         else {
+            j++;
+         }
+      }
+   }
+ 
   int* arrCopy2 = (int*) calloc(count+1, sizeof(int));
      for(i=1; i<=count; i++) {
        arrCopy2[i]= arrCopy[i-1];
      }
 
        arrCopy2[0] = count;
-       
+        free(arrCopy);
+
+   
 return arrCopy2;
 }
+
+
 
 
