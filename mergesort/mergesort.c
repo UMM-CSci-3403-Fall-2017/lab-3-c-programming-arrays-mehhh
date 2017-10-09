@@ -61,7 +61,7 @@
       mergeRanges(values, startIndex, midPoint, endIndex);
     }
   }
-// initiializing mergesort and
+// initiializing mergesort
 void mergesort(int end, int* values) {
 mergesortRange(values, 0, end);
 
