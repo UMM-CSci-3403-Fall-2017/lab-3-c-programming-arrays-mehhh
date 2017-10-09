@@ -6,9 +6,10 @@
 #include "array_merge.h"
 #include "mergesort.h"
 #include <stdio.h>
+
+
 //This function takes in the array called sizes and make one big array to hold
 //the number of elements at the first index and the capacity for the element of the subarrays
-
 int* array_merge(int num_arrays, int* sizes, int** values) {
   int i=0;
   int j=0;
