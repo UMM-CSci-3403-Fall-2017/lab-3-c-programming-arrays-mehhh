@@ -1,3 +1,6 @@
+
+
+
 #include <stdlib.h>
 #include <stdbool.h>
 #include "array_merge.h"
@@ -12,19 +15,18 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   int arr_size=0;
   int count=0;
   int index=0;
-  int k=0;
   
-  //the outter loop goes over the array containing the sizes of the arrays and sets the inner loop constraint as the size of the 1st arrray
-  //until the last array. A count is being added to get the number of elements.
+  //Counts the total number of elements in values
   for(i=0; i<num_arrays; i++) {
     count = count + sizes[i];
   }
  
 
-  
+  //making an array pointer to contain all elements
 int* arrCopy = (int*)calloc(count, sizeof(int));
-
-
+//doing the same thing as above.
+ int* b = (int*)calloc(count, sizeof(int));
+ //copying things over to arrCopy
   for(i=0; i<num_arrays; i++) {
     arr_size= sizes[i];
     for(j=0; j<arr_size; j++) {
@@ -33,40 +35,36 @@ int* arrCopy = (int*)calloc(count, sizeof(int));
     }
   }
 
-
+  //sorting
 mergesort(count, arrCopy);
 
 
+int newSize=0;
 
-for(i=0; i < count; i++) 
+//this loop will copy over all elements from arrCopy without repeats
+   for(i=0;i<count;i++)
    {
-      for(j=i+1; j < count; )
+      for(j=0;j<newSize;j++)
       {
-         if(arrCopy[j] == arrCopy[i])
-         {
-            for(k=j; k < count;k++) 
-            {
-               arrCopy[k] = arrCopy[k+1];
-            }
-            count--;
-         }
-         else {
-            j++;
-         }
+         if(arrCopy[i]==b[j])
+            break;
+      }
+      if(j==newSize)
+      {
+         b[newSize] = arrCopy[i];
+         newSize++;
       }
    }
- 
-  int* arrCopy2 = (int*) calloc(count+1, sizeof(int));
-     for(i=1; i<=count; i++) {
-       arrCopy2[i]= arrCopy[i-1];
-     }
-       arrCopy2[0] = count;
-        free(arrCopy);
 
+   //making a new array that will hold the correct number of elements
+  int* arrCopy2 = (int*) calloc(newSize+1, sizeof(int));
+     for(i=1; i<=newSize; i++) {
+       arrCopy2[i]= b[i-1];
+     }
+     //replacing the first index of the array with the nubmer of elements in it
+       arrCopy2[0] = newSize;
+        free(arrCopy);
+	free(b);
    
 return arrCopy2;
 }
-
-
-
-
