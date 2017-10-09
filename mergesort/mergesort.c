@@ -46,10 +46,9 @@
       values[i + startIndex] = destination[i];
     }
 
-    freeing the extra memory used by mergesort since you have to partition the array
+    //freeing the extra memory used by mergesort since you have to partition the array
       free(destination);
 
-	  free(destination);
 
   }
     void mergesortRange(int* values, int startIndex, int endIndex) {
